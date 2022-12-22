@@ -2,8 +2,8 @@ package com.example.to_doapp.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.to_doapp.data.models.TodoTask
-import com.example.to_doapp.data.repositories.TodoRepository
+import com.example.to_doapp.ui.data.models.TodoTask
+import com.example.to_doapp.ui.data.repositories.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

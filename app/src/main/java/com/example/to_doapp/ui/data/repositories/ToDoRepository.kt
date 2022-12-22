@@ -1,7 +1,7 @@
-package com.example.to_doapp.data.repositories
+package com.example.to_doapp.ui.data.repositories
 
-import com.example.to_doapp.data.TodoDao
-import com.example.to_doapp.data.models.TodoTask
+import com.example.to_doapp.ui.data.TodoDao
+import com.example.to_doapp.ui.data.models.TodoTask
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

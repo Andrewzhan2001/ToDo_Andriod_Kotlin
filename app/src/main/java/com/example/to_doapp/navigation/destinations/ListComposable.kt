@@ -3,7 +3,8 @@ package com.example.to_doapp.navigation.destinations
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.compose.navArgument
+import com.example.to_doapp.ui.screens.list.ListScreen
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.Constants.LIST_ARGUMENT_KEY
 import com.example.to_doapp.util.Constants.LIST_SCREEN
@@ -18,6 +19,6 @@ fun NavGraphBuilder.listComposable(
             type = NavType.StringType
         })
     ) {
-
+        ListScreen(navigateToTaskScreen = navigateToTaskScreen)
     }
 }

@@ -3,7 +3,7 @@ package com.example.to_doapp.navigation.destinations
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.compose.navArgument
 import com.example.to_doapp.util.Action
 import com.example.to_doapp.util.Constants.TASK_ARGUMENT_KEY
 import com.example.to_doapp.util.Constants.TASK_SCREEN
