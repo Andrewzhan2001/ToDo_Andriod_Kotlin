@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.composetodoapp.R
 import com.example.to_doapp.R
 import com.example.to_doapp.components.PriorityItem
 import com.example.to_doapp.ui.data.models.Priority
