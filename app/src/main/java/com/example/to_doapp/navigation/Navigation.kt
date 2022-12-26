@@ -6,12 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.to_doapp.navigation.destinations.listComposable
 import com.example.to_doapp.navigation.destinations.taskComposable
+import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.Constants.LIST_SCREEN
 
 
 @Composable
 fun SetupNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedViewModel: SharedViewModel
 ){
     val screen = remember(navController) {
         // we want to remember the screen throughout the application
@@ -21,7 +23,8 @@ fun SetupNavigation(
 
     NavHost(navController = navController, startDestination = LIST_SCREEN ) {
         listComposable(
-            navigateToTaskScreen = screen.task
+            navigateToTaskScreen = screen.task,
+            sharedViewModel = sharedViewModel
         )
         taskComposable(
             navigateToListScreen = screen.list

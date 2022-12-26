@@ -12,6 +12,7 @@ import com.example.to_doapp.util.Constants.LIST_SCREEN
 fun NavGraphBuilder.listComposable(
     // this will pass the navigate to task screen function
     navigateToTaskScreen: (taskId: Int) -> Unit,
+    sharedViewModel: SharedViewModel
 ) {
     composable(
         route = LIST_SCREEN,
@@ -19,6 +20,6 @@ fun NavGraphBuilder.listComposable(
             type = NavType.StringType
         })
     ) {
-        ListScreen(navigateToTaskScreen = navigateToTaskScreen)
+        ListScreen(navigateToTaskScreen = navigateToTaskScreen, sharedViewModel = sharedViewModel)
     }
 }
