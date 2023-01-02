@@ -1,9 +1,13 @@
 package com.example.to_doapp.ui.screens.list
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -14,56 +18,63 @@ import com.example.to_doapp.ui.data.models.Priority
 import com.example.to_doapp.ui.data.models.TodoTask
 import com.example.to_doapp.ui.theme.*
 import com.example.to_doapp.util.Action
+import com.example.to_doapp.util.RequestState
 import com.example.to_doapp.util.SearchAppBarState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
+@ExperimentalMaterialApi
 fun ListContent(
     allTasks: RequestState<List<TodoTask>>,
-    searchedTasks: RequestState<List<TodoTask>>,
-    lowPriorityTasks: List<TodoTask>,
-    highPriorityTasks: List<TodoTask>,
-    sortState: RequestState<Priority>,
-    searchAppBarState: SearchAppBarState,
-    onSwipeToDelete: (Action, TodoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (sortState is RequestState.Success) {
-        when {
-            searchAppBarState == SearchAppBarState.TRIGGERED -> {
-                if (searchedTasks is RequestState.Success) {
-                    HandleListContent(
-                        tasks = searchedTasks.data,
-                        onSwipeToDelete = onSwipeToDelete,
-                        navigateToTaskScreen = navigateToTaskScreen
-                    )
-                }
+    if (allTasks is RequestState.Success) {
+        HandleListContent(
+            tasks = allTasks.data,
+            navigateToTaskScreen = navigateToTaskScreen
+        )
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun HandleListContent(
+    tasks: List<TodoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks.isEmpty()) {
+        EmptyContent()
+    } else {
+        DisplayTasks(
+            tasks = tasks,
+            navigateToTaskScreen = navigateToTaskScreen
+        )
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun DisplayTasks(
+    tasks: List<TodoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
             }
-            sortState.data == Priority.NONE -> {
-                if (allTasks is RequestState.Success) {
-                    HandleListContent(
-                        tasks = allTasks.data,
-                        onSwipeToDelete = onSwipeToDelete,
-                        navigateToTaskScreen = navigateToTaskScreen
-                    )
-                }
-            }
-            sortState.data == Priority.LOW -> {
-                HandleListContent(
-                    tasks = lowPriorityTasks,
-                    onSwipeToDelete = onSwipeToDelete,
-                    navigateToTaskScreen = navigateToTaskScreen
-                )
-            }
-            sortState.data == Priority.HIGH -> {
-                HandleListContent(
-                    tasks = highPriorityTasks,
-                    onSwipeToDelete = onSwipeToDelete,
-                    navigateToTaskScreen = navigateToTaskScreen
-                )
-            }
+        ) { task ->
+            TaskItem(
+                toDoTask = task,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
         }
     }
 }
+
+
 
 // when we click one of those tasks, it will pass to task screen with that taskid
 

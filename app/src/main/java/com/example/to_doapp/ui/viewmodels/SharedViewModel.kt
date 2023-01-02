@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_doapp.ui.data.models.TodoTask
 import com.example.to_doapp.ui.data.repositories.TodoRepository
+import com.example.to_doapp.util.RequestState
 import com.example.to_doapp.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,16 +21,22 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor( private val repository: TodoRepository ) :ViewModel() {
     val searchAppBarState: MutableState<SearchAppBarState> = mutableStateOf(SearchAppBarState.CLOSED)
     val searchTextState: MutableState<String> = mutableStateOf("")
-    private val _allTasks = MutableStateFlow<List<TodoTask>>(emptyList())
-    val allTasks: StateFlow<List<TodoTask>> = _allTasks
+
+    // data wrapped by RequestState to represent when we correctly get the data from database
+    private val _allTasks = MutableStateFlow<RequestState<List<TodoTask>>>(RequestState.Idle)
+    val allTasks: StateFlow<RequestState<List<TodoTask>>> = _allTasks
 
     fun getAllTasks() {
-        // scope tide to lifecycle of viewModel
-        viewModelScope.launch {
-            // Trigger the flow and consume its elements using collect
-            repository.getAllTasks.collect {
-                _allTasks.value = it
+        _allTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                repository.getAllTasks.collect {
+                    // we only want to display data when requeststate is success
+                    _allTasks.value = RequestState.Success(it)
+                }
             }
+        } catch (e: Exception) {
+            _allTasks.value = RequestState.Error(e)
         }
     }
 }
