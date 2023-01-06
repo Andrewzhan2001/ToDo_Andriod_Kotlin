@@ -1,13 +1,11 @@
 package com.example.to_doapp.ui.screens.list
 
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -15,18 +13,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.to_doapp.ui.data.models.Priority
-import com.example.to_doapp.ui.data.models.TodoTask
+import com.example.to_doapp.ui.data.models.ToDoTask
 import com.example.to_doapp.ui.theme.*
-import com.example.to_doapp.util.Action
 import com.example.to_doapp.util.RequestState
-import com.example.to_doapp.util.SearchAppBarState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalMaterialApi
 fun ListContent(
-    allTasks: RequestState<List<TodoTask>>,
+    allTasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     if (allTasks is RequestState.Success) {
@@ -40,7 +34,7 @@ fun ListContent(
 @ExperimentalMaterialApi
 @Composable
 fun HandleListContent(
-    tasks: List<TodoTask>,
+    tasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     if (tasks.isEmpty()) {
@@ -56,7 +50,7 @@ fun HandleListContent(
 @ExperimentalMaterialApi
 @Composable
 fun DisplayTasks(
-    tasks: List<TodoTask>,
+    tasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     LazyColumn {
@@ -81,7 +75,7 @@ fun DisplayTasks(
 // surface component api ins in experimental
 @ExperimentalMaterialApi
 @Composable
-fun TaskItem(toDoTask: TodoTask, navigateToTaskScreen: (taskId: Int) -> Unit) {
+fun TaskItem(toDoTask: ToDoTask, navigateToTaskScreen: (taskId: Int) -> Unit) {
     Surface(modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colors.taskItemBackgroundColor,
         shape = RectangleShape,
@@ -138,7 +132,7 @@ fun TaskItem(toDoTask: TodoTask, navigateToTaskScreen: (taskId: Int) -> Unit) {
 @Preview
 private fun TaskItemPreview() {
     TaskItem(
-        toDoTask = TodoTask(
+        toDoTask = ToDoTask(
             id = 0,
             title = "Title",
             description = "Lorem ipsum dolor sit amet.",

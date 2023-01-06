@@ -1,7 +1,7 @@
 package com.example.to_doapp.ui.data
 
 import androidx.room.*
-import com.example.to_doapp.ui.data.models.TodoTask
+import com.example.to_doapp.ui.data.models.ToDoTask
 import kotlinx.coroutines.flow.Flow
 
 // Data Access Object - where you define your database interactions.
@@ -11,13 +11,13 @@ interface TodoDao {
     // The database operations can take a long time to execute, so they should run on a separate
     // thread. Make the function a suspend function, so that this function can be called from a coroutine.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addTask(todoTask: TodoTask)
+    suspend fun addTask(todoTask: ToDoTask)
 
     @Update
-    suspend fun updateTask(todoTask: TodoTask)
+    suspend fun updateTask(todoTask: ToDoTask)
 
     @Delete
-    suspend fun deleteTask(todoTask: TodoTask)
+    suspend fun deleteTask(todoTask: ToDoTask)
 
     @Query("DELETE from todo_table")
     suspend fun deleteAllTasks()
@@ -29,17 +29,17 @@ interface TodoDao {
     // Because of the Flow return type, Room also runs the query on the background thread.
     // You don't need to explicitly make it a suspend function and call inside a coroutine scope.
     @Query("SELECT * from todo_table ORDER BY id ASC")
-    fun getAllTasks(): Flow<List<TodoTask>>
+    fun getAllTasks(): Flow<List<ToDoTask>>
 
     @Query("SELECT * from todo_table WHERE id = :taskId")
-    fun getSelectedTask(taskId: Int): Flow<TodoTask>
+    fun getSelectedTask(taskId: Int): Flow<ToDoTask>
 
     @Query("SELECT * from todo_table WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
-    fun searchDatabase(searchQuery:String):Flow<List<TodoTask>>
+    fun searchDatabase(searchQuery:String):Flow<List<ToDoTask>>
 
     @Query("SELECT * FROM todo_table ORDER BY CASE WHEN priority LIKE 'L%' THEN 1 WHEN priority LIKE 'M%' THEN 2 WHEN priority LIKE 'H%' THEN 3 END")
-    fun sortByLowPriority(): Flow<List<TodoTask>>
+    fun sortByLowPriority(): Flow<List<ToDoTask>>
 
     @Query("SELECT * FROM todo_table ORDER BY CASE WHEN priority LIKE 'H%' THEN 1 WHEN priority LIKE 'M%' THEN 2 WHEN priority LIKE 'L%' THEN 3 END")
-    fun sortByHighPriority(): Flow<List<TodoTask>>
+    fun sortByHighPriority(): Flow<List<ToDoTask>>
 }
