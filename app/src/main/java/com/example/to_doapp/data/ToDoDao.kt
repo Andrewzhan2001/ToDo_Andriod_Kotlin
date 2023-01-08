@@ -1,7 +1,7 @@
-package com.example.to_doapp.ui.data
+package com.example.to_doapp.data
 
 import androidx.room.*
-import com.example.to_doapp.ui.data.models.ToDoTask
+import com.example.to_doapp.data.models.ToDoTask
 import kotlinx.coroutines.flow.Flow
 
 // Data Access Object - where you define your database interactions.

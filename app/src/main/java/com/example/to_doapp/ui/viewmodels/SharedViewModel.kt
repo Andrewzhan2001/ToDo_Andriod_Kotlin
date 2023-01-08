@@ -4,8 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.to_doapp.ui.data.models.ToDoTask
-import com.example.to_doapp.ui.data.repositories.TodoRepository
+import com.example.to_doapp.data.models.ToDoTask
+import com.example.to_doapp.data.repositories.TodoRepository
 import com.example.to_doapp.util.RequestState
 import com.example.to_doapp.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 // this class shows all the variables either get from hilt, provide those value to view (contains all data required for view)
 @HiltViewModel
-class SharedViewModel @Inject constructor( private val repository: TodoRepository ) :ViewModel() {
+class SharedViewModel @Inject constructor( private val repository: TodoRepository) :ViewModel() {
     val searchAppBarState: MutableState<SearchAppBarState> = mutableStateOf(SearchAppBarState.CLOSED)
     val searchTextState: MutableState<String> = mutableStateOf("")
 

@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.to_doapp.ui.data.models.Priority
-import com.example.to_doapp.ui.data.models.ToDoTask
+import com.example.to_doapp.data.models.Priority
+import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.ui.theme.*
 import com.example.to_doapp.util.RequestState
 

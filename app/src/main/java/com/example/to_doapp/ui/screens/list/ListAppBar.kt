@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.to_doapp.R
 import com.example.to_doapp.components.PriorityItem
-import com.example.to_doapp.ui.data.models.Priority
+import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.ui.theme.*
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.SearchAppBarState
@@ -153,7 +153,7 @@ fun DeleteAllAction(onDeleteAllConfirmed: () -> Unit) {
         mutableStateOf(false)
     }
 
-    IconButton(onClick = { expanded = false }) {
+    IconButton(onClick = { expanded = true }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_vertical_menu),
             contentDescription = stringResource(

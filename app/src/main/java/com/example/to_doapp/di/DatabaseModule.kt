@@ -2,8 +2,8 @@ package com.example.to_doapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.to_doapp.ui.data.TodoDao
-import com.example.to_doapp.ui.data.TodoDatabase
+import com.example.to_doapp.data.TodoDao
+import com.example.to_doapp.data.TodoDatabase
 import com.example.to_doapp.util.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
