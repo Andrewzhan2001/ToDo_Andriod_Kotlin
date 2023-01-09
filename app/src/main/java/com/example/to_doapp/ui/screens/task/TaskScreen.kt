@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.Action
@@ -25,6 +26,14 @@ fun TaskScreen(
             )
         },
         content = {
+            TaskContent(
+                title = "",
+                onTitleChange = {},
+                description = "",
+                onDescriptionChange = {},
+                priority = Priority.LOW,
+                onPrioritySelected = {}
+            )
         }
     )
 }
