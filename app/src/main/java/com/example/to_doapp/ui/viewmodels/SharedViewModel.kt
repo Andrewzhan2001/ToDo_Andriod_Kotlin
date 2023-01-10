@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.data.repositories.TodoRepository
 import com.example.to_doapp.util.RequestState
@@ -28,6 +29,12 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
+    val id: MutableState<Int> = mutableStateOf(0)
+    val title: MutableState<String> = mutableStateOf("")
+    val description: MutableState<String> = mutableStateOf("")
+    val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
+
+
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
@@ -46,6 +53,20 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
             repository.getSelectedTask(taskId = taskId).collect { task ->
                 _selectedTask.value = task
             }
+        }
+    }
+    fun updateTaskFields(selectedTask: ToDoTask?) {
+        if (selectedTask != null) {
+            id.value = selectedTask.id
+            title.value = selectedTask.title
+            description.value = selectedTask.description
+            priority.value = selectedTask.priority
+        } else {
+            // for the case that we want to add a new task
+            id.value = 0
+            title.value = ""
+            description.value = ""
+            priority.value = Priority.LOW
         }
     }
 }

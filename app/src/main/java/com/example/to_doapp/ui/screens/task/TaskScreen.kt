@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
@@ -16,7 +17,9 @@ fun TaskScreen(
     sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit
 ) {
-    val context = LocalContext.current
+    val title: String by sharedViewModel.title
+    val description: String by sharedViewModel.description
+    val priority: Priority by sharedViewModel.priority
 
     Scaffold(
         topBar = {
@@ -27,12 +30,12 @@ fun TaskScreen(
         },
         content = {
             TaskContent(
-                title = "",
-                onTitleChange = {},
-                description = "",
-                onDescriptionChange = {},
-                priority = Priority.LOW,
-                onPrioritySelected = {}
+                title = title,
+                onTitleChange = { sharedViewModel.title.value = it },
+                description = description,
+                onDescriptionChange = { sharedViewModel.description.value = it },
+                priority = priority,
+                onPrioritySelected = { sharedViewModel.priority.value = it }
             )
         }
     )
