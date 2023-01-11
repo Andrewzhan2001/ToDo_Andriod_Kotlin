@@ -21,17 +21,32 @@ fun TaskScreen(
     val description: String by sharedViewModel.description
     val priority: Priority by sharedViewModel.priority
 
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TaskAppBar(
                 selectedTask = selectedTask,
-                navigateToListScreen = navigateToListScreen
+                navigateToListScreen = { action ->
+                    // if we just press back button
+                    if (action == Action.NO_ACTION) {
+                        navigateToListScreen(action)
+                    // if we press other actions in navbar
+                    } else {
+                        if (sharedViewModel.validateFields()) {
+                            navigateToListScreen(action)
+                        } else {
+                            // apply to both add new task and update task
+                            displayToast(context = context)
+                        }
+                    }
+                }
             )
         },
         content = {
             TaskContent(
                 title = title,
-                onTitleChange = { sharedViewModel.title.value = it },
+                onTitleChange = { sharedViewModel.updateTitle(it) },
                 description = description,
                 onDescriptionChange = { sharedViewModel.description.value = it },
                 priority = priority,

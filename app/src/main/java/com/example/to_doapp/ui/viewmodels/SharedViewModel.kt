@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.data.repositories.TodoRepository
+import com.example.to_doapp.util.Constants.MAX_TITLE_LENGTH
 import com.example.to_doapp.util.RequestState
 import com.example.to_doapp.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,5 +69,15 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
             description.value = ""
             priority.value = Priority.LOW
         }
+    }
+    fun updateTitle(newTitle: String) {
+        //when we reach the limit, the title state will not update
+        if (newTitle.length < MAX_TITLE_LENGTH) {
+            title.value = newTitle
+        }
+    }
+    // check two fields is not empty
+    fun validateFields(): Boolean {
+        return title.value.isNotEmpty() && description.value.isNotEmpty()
     }
 }
