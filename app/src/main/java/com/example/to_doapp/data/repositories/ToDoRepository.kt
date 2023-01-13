@@ -17,16 +17,16 @@ class TodoRepository @Inject constructor(private val todoDao: TodoDao) {
         return todoDao.getSelectedTask(taskId = taskId)
     }
 
-    suspend fun addTask(todoTask: ToDoTask) {
-        todoDao.addTask(todoTask = todoTask)
+    suspend fun addTask(toDoTask: ToDoTask) {
+        todoDao.addTask(toDoTask = toDoTask)
     }
 
     suspend fun updateTask(todoTask: ToDoTask) {
-        todoDao.updateTask(todoTask = todoTask)
+        todoDao.updateTask(toDoTask = todoTask)
     }
 
     suspend fun deleteTask(todoTask: ToDoTask) {
-        todoDao.deleteTask(todoTask = todoTask)
+        todoDao.deleteTask(toDoTask = todoTask)
     }
 
     suspend fun deleteAllTasks() {

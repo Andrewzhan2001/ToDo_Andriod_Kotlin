@@ -11,13 +11,13 @@ interface TodoDao {
     // The database operations can take a long time to execute, so they should run on a separate
     // thread. Make the function a suspend function, so that this function can be called from a coroutine.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addTask(todoTask: ToDoTask)
+    suspend fun addTask(toDoTask: ToDoTask)
 
     @Update
-    suspend fun updateTask(todoTask: ToDoTask)
+    suspend fun updateTask(toDoTask: ToDoTask)
 
     @Delete
-    suspend fun deleteTask(todoTask: ToDoTask)
+    suspend fun deleteTask(toDoTask: ToDoTask)
 
     @Query("DELETE from todo_table")
     suspend fun deleteAllTasks()
