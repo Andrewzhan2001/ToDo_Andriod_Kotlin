@@ -31,7 +31,7 @@ fun NavGraphBuilder.taskComposable(
 
         val selectedTask by sharedViewModel.selectedTask.collectAsState()
         LaunchedEffect(key1 = selectedTask) {
-            // when taskId == -1, selectedTask = null
+            // selectedTask = null when we delete task, we want to keep the selectedTask for undo
             if (selectedTask != null || taskId == -1) {
                 sharedViewModel.updateTaskFields(selectedTask = selectedTask)
             }

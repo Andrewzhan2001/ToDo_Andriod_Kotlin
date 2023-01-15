@@ -112,14 +112,13 @@ fun CloseAction(onCloseClicked: (Action) -> Unit) {
 
 @Composable
 fun ExistingTaskAppBarActions(selectedTask: ToDoTask, navigateToListScreen: (Action) -> Unit) {
-    var openDialog by remember { mutableStateOf(false) }
-    DeleteAction(onDeleteClicked = { openDialog = true })
+    DeleteAction(onDeleteClicked = navigateToListScreen)
     UpdateAction(onUpdateClicked = navigateToListScreen)
 }
 
 @Composable
-fun DeleteAction(onDeleteClicked: () -> Unit) {
-    IconButton(onClick = { onDeleteClicked() }) {
+fun DeleteAction(onDeleteClicked: (Action) -> Unit) {
+    IconButton(onClick = { onDeleteClicked(Action.DELETE) }) {
         Icon(
             imageVector = Icons.Filled.Delete,
             contentDescription = stringResource(id = R.string.delete_icon),

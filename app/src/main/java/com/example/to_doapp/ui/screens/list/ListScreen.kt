@@ -32,6 +32,7 @@ fun ListScreen(
     val scaffoldState = rememberScaffoldState()
 
     // in this function, when action changed, the we will display snackbar
+    // whenever action in sharedViewModel changed, this wil recomposite and run the handledatabaseActions
     DisplaySnackBar(
         scaffoldState = scaffoldState,
         handleDatabaseActions = { sharedViewModel.handleDatabaseActions(action = action) },
@@ -87,6 +88,8 @@ fun DisplaySnackBar(
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION) {
             scope.launch {
+                // when we click undo, the task states(id,title,priority,description) has not changed yet
+                // it changed only when we clicked a new task from list
                 val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
                     message = setMessage(action = action, taskTitle = taskTitle),
                     actionLabel = setActionLabel(action = action)
@@ -121,6 +124,7 @@ private fun undoDeletedTask(
     snackBarResult: SnackbarResult,
     onUndoClicked: (Action) -> Unit
 ) {
+    // do nothing when actionlabel shows OK
     if (snackBarResult == SnackbarResult.ActionPerformed && action == Action.DELETE) {
         onUndoClicked(Action.UNDO)
     }
