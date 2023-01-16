@@ -99,13 +99,13 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
                 deleteTask()
             }
             Action.DELETE_ALL -> {
-
+                deleteAllTasks()
             }
             Action.UNDO -> {
                 addTask()
             }
             else -> {
-
+                // when back button pressed
             }
         }
         // change action to default action
@@ -163,5 +163,9 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
         searchAppBarState.value = SearchAppBarState.TRIGGERED
     }
 
-    
+    private fun deleteAllTasks() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllTasks()
+        }
+    }
 }
