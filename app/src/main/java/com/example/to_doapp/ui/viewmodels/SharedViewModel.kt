@@ -37,6 +37,10 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
     val description: MutableState<String> = mutableStateOf("")
     val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
 
+
+    private val _searchedTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
+    val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchedTasks
+
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
@@ -118,10 +122,9 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
             )
             repository.addTask(toDoTask = toDoTask)
         }
-        // close the search appbar
+        // close the search when we add new task
         searchAppBarState.value = SearchAppBarState.CLOSED
     }
-
     private fun updateTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
@@ -133,7 +136,6 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
             repository.updateTask(toDoTask = toDoTask)
         }
     }
-
     private fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
@@ -145,4 +147,21 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
             repository.deleteTask(toDoTask = toDoTask)
         }
     }
+
+
+    fun searchDatabase(searchQuery: String) {
+        _searchedTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                repository.searchDatabase(searchQuery = "%$searchQuery%").collect { searchedTasks ->
+                    _searchedTasks.value = RequestState.Success(searchedTasks)
+                }
+            }
+        } catch (e: Exception) {
+            _searchedTasks.value = RequestState.Error(e)
+        }
+        searchAppBarState.value = SearchAppBarState.TRIGGERED
+    }
+
+    
 }

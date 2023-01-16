@@ -16,18 +16,33 @@ import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.ui.theme.*
 import com.example.to_doapp.util.RequestState
+import com.example.to_doapp.util.SearchAppBarState
 
 @Composable
 @ExperimentalMaterialApi
 fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
-    navigateToTaskScreen: (taskId: Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+    searchedTasks: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState
+
 ) {
-    if (allTasks is RequestState.Success) {
-        HandleListContent(
-            tasks = allTasks.data,
-            navigateToTaskScreen = navigateToTaskScreen
-        )
+    // when pressed search in keyboard, the state will become triggered
+    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
+        if (searchedTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = searchedTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    } else {
+        // when we close the search bar, searchappbarstate become closed, content will show all tasks
+        if (allTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = allTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
     }
 }
 

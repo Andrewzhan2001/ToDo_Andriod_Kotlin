@@ -31,6 +31,7 @@ fun ListScreen(
 
     val scaffoldState = rememberScaffoldState()
 
+    val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
     // in this function, when action changed, the we will display snackbar
     // whenever action in sharedViewModel changed, this wil recomposite and run the handledatabaseActions
     DisplaySnackBar(
@@ -52,7 +53,12 @@ fun ListScreen(
             )
         },
         content = {
-            ListContent(allTasks = allTasks, navigateToTaskScreen = navigateToTaskScreen)
+            ListContent(
+                allTasks = allTasks,
+                navigateToTaskScreen = navigateToTaskScreen,
+                searchedTasks = searchedTasks,
+                searchAppBarState = searchAppBarState
+            )
         },
         floatingActionButton = {
             ListFab(onFabClicked = navigateToTaskScreen)
