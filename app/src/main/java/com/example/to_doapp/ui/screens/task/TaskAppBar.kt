@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.to_doapp.R
+import com.example.to_doapp.components.DisplayAlertDialog
 import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.data.models.ToDoTask
 import com.example.to_doapp.ui.theme.topAppBarBackgroundColor
@@ -112,7 +113,16 @@ fun CloseAction(onCloseClicked: (Action) -> Unit) {
 
 @Composable
 fun ExistingTaskAppBarActions(selectedTask: ToDoTask, navigateToListScreen: (Action) -> Unit) {
-    DeleteAction(onDeleteClicked = navigateToListScreen)
+    var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_task, selectedTask.title),
+        message = stringResource(id = R.string.delete_task_confirmation, selectedTask.title),
+        // this state will ocntrol whether to open teh dialog
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { navigateToListScreen(Action.DELETE) })
+    DeleteAction(onDeleteClicked = { openDialog = true })
     UpdateAction(onUpdateClicked = navigateToListScreen)
 }
 

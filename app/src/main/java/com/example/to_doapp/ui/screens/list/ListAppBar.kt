@@ -19,6 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.to_doapp.R
+import com.example.to_doapp.components.DisplayAlertDialog
 import com.example.to_doapp.components.PriorityItem
 import com.example.to_doapp.data.models.Priority
 import com.example.to_doapp.ui.theme.*
@@ -93,9 +94,17 @@ fun ListAppBarActions(
     onDeleteAllClicked: () -> Unit
 ) {
     var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_all_tasks),
+        message = stringResource(id = R.string.delete_all_tasks_confirmation),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { onDeleteAllClicked() }
+    )
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction(onDeleteAllClicked = onDeleteAllClicked)
+    DeleteAllAction(onDeleteAllClicked = { openDialog = true })
 }
 
 @Composable
