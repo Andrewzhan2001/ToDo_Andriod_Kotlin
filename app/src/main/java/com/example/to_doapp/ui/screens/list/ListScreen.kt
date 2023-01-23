@@ -21,7 +21,9 @@ fun ListScreen(
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
-       sharedViewModel.getAllTasks()
+        sharedViewModel.getAllTasks()
+        // sortState in sharedviewmodel will get the value from datastore
+        sharedViewModel.readSortState()
     }
     val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
@@ -32,6 +34,10 @@ fun ListScreen(
     val scaffoldState = rememberScaffoldState()
 
     val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
+
+    val sortState by sharedViewModel.sortState.collectAsState()
+    val lowPriorityTasks by sharedViewModel.lowPriorityTasks.collectAsState()
+    val highPriorityTasks by sharedViewModel.highPriorityTasks.collectAsState()
     // in this function, when action changed, the we will display snackbar
     // whenever action in sharedViewModel changed, this wil recomposite and run the handledatabaseActions
     DisplaySnackBar(
@@ -57,7 +63,10 @@ fun ListScreen(
                 allTasks = allTasks,
                 navigateToTaskScreen = navigateToTaskScreen,
                 searchedTasks = searchedTasks,
-                searchAppBarState = searchAppBarState
+                searchAppBarState = searchAppBarState,
+                lowPriorityTasks = lowPriorityTasks,
+                highPriorityTasks = highPriorityTasks,
+                sortState = sortState,
             )
         },
         floatingActionButton = {
