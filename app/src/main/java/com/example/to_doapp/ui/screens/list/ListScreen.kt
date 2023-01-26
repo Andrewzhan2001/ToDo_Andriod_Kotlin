@@ -67,6 +67,11 @@ fun ListScreen(
                 lowPriorityTasks = lowPriorityTasks,
                 highPriorityTasks = highPriorityTasks,
                 sortState = sortState,
+                onSwipeToDelete = { action, task ->
+                    sharedViewModel.action.value = action
+                    // update task in sharedviewmodel, so we can correctly delete the swiped task by deletetask inside sharedviewmodel
+                    sharedViewModel.updateTaskFields(selectedTask = task)
+                }
             )
         },
         floatingActionButton = {
