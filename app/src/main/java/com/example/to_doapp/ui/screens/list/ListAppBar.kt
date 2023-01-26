@@ -83,7 +83,7 @@ fun DefaultListAppBar(
                 onDeleteAllClicked = onDeleteAllClicked
             )
         },
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
     )
 }
 
