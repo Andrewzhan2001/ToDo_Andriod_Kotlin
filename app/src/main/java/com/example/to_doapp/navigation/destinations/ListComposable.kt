@@ -1,10 +1,11 @@
 package com.example.to_doapp.navigation.destinations
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.compose.navArgument
 import com.example.to_doapp.ui.screens.list.ListScreen
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
@@ -13,6 +14,7 @@ import com.example.to_doapp.util.Constants.LIST_SCREEN
 import com.example.to_doapp.util.toAction
 
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 fun NavGraphBuilder.listComposable(
     // this will pass the navigate to task screen function
     navigateToTaskScreen: (taskId: Int) -> Unit,
