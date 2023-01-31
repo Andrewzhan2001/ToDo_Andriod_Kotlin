@@ -18,12 +18,16 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
+    action: Action,
 ) {
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllTasks()
         // sortState in sharedviewmodel will get the value from datastore
         sharedViewModel.readSortState()
+    }
+    LaunchedEffect(key1 = action) {
+        sharedViewModel.handleDatabaseActions(action = action)
     }
     val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
@@ -42,7 +46,7 @@ fun ListScreen(
     // whenever action in sharedViewModel changed, this wil recomposite and run the handledatabaseActions
     DisplaySnackBar(
         scaffoldState = scaffoldState,
-        handleDatabaseActions = { sharedViewModel.handleDatabaseActions(action = action) },
+        onComplete = { sharedViewModel.action.value = it },
         //set undo action state, which will be handled in sharedviewmodel
         onUndoClicked = { sharedViewModel.action.value = it },
         taskTitle = sharedViewModel.title.value,
@@ -97,13 +101,11 @@ fun ListFab(onFabClicked: (taskId: Int) -> Unit) {
 @Composable
 fun DisplaySnackBar(
     scaffoldState: ScaffoldState,
-    handleDatabaseActions: () -> Unit,
+    onComplete: (Action) -> Unit,
     onUndoClicked: (Action) -> Unit,
     taskTitle: String,
     action: Action
 ) {
-    handleDatabaseActions()
-
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION) {
@@ -120,6 +122,7 @@ fun DisplaySnackBar(
                     onUndoClicked = onUndoClicked
                 )
             }
+            onComplete(Action.NO_ACTION)
         }
     }
 }

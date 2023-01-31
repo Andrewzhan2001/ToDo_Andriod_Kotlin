@@ -41,7 +41,7 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
     private val _searchedTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchedTasks
 
-    val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
+    var action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
@@ -108,8 +108,6 @@ class SharedViewModel @Inject constructor( private val repository: TodoRepositor
                 // when back button pressed
             }
         }
-        // change action to default action
-        this.action.value = Action.NO_ACTION
     }
 
     private fun addTask() {

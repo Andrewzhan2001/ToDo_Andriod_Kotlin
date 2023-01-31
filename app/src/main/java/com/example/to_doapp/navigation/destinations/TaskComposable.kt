@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import com.google.accompanist.navigation.animation.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.example.to_doapp.ui.screens.task.TaskScreen
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.Action
@@ -27,11 +27,10 @@ fun NavGraphBuilder.taskComposable(
         arguments = listOf(navArgument(TASK_ARGUMENT_KEY) {
             type = NavType.IntType
         }),
-        enterTransition = { _, _ ->
+        enterTransition = {
             slideInHorizontally(
-                initialOffsetX = { fullWidth -> -fullWidth },
                 animationSpec = tween(
-                    durationMillis = 300
+                    durationMillis = 1000
                 )
             )
         }

@@ -12,7 +12,7 @@ import com.example.to_doapp.util.Constants.SPLASH_SCREEN
 fun NavGraphBuilder.splashComposable(navigateToListScreen: () -> Unit) {
     composable(
         route = SPLASH_SCREEN,
-        exitTransition = { _, _ ->
+        exitTransition = {
             slideOutVertically(
                 targetOffsetY = { fullHeight -> -fullHeight },
                 animationSpec = tween(durationMillis = 300)

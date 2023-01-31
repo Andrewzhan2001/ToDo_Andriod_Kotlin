@@ -3,10 +3,11 @@ package com.example.to_doapp.navigation.destinations
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import com.google.accompanist.navigation.animation.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.example.to_doapp.ui.screens.list.ListScreen
 import com.example.to_doapp.ui.viewmodels.SharedViewModel
 import com.example.to_doapp.util.Constants.LIST_ARGUMENT_KEY
@@ -33,6 +34,8 @@ fun NavGraphBuilder.listComposable(
             sharedViewModel.action.value = action
         }
 
-        ListScreen(navigateToTaskScreen = navigateToTaskScreen, sharedViewModel = sharedViewModel)
+        val databaseAction by sharedViewModel.action
+
+        ListScreen(navigateToTaskScreen = navigateToTaskScreen, sharedViewModel = sharedViewModel, action=databaseAction)
     }
 }
