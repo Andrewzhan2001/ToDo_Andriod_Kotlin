@@ -13,7 +13,7 @@ Users can search for tasks, sort tasks by priority and delete all tasks with jus
 ## 🏁 Demo
 The following video is a demonstration of how to use this app.
 
-
+https://user-images.githubusercontent.com/97903569/227970581-5e09ed99-92a7-4405-b146-3faac96412ab.mp4
 
 ## 🎈 Features
 - This app is built fully with `Kotlin` and `Jetpack Compose` as the UI toolkit.
