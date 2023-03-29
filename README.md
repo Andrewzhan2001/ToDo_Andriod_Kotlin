@@ -1,8 +1,8 @@
-<h1 align="center">ToDo App - Andriod</h1>
+<h1 align="center">ToDo App - Android</h1>
 
 ---
 
-<p align="center"> This is a memorandum Andriod App build in Jetpack Compose
+<p align="center"> This is a memorandum Android App build in Jetpack Compose
     <br> 
 </p>
 
